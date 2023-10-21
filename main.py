@@ -78,12 +78,15 @@ async def get_student(fac_id,dep_id):
 #Post Request
 
 @app.post("/professors",status_code=201)
-def add_book(professor: Professor):
+def add_professor(professor: Professor):
     try:
         data['professors'].append(professor.dict())
-        return {"status_code":201, "message":"New Professor Added Successfully"}
+        return {"status_code":201, 
+                "message":"New Professor Added Successfully"}
     except:
-        return {"error":"Invalid Data Format", "status_code": 422, "messages":"Please correct your data format and url."}
+        return {"error":"Invalid Data Format", 
+                "status_code": 422, 
+                "messages":"Please correct your data format and url."}
 
 @app.post("/professors/{prof_id}/students/",status_code=201)
 def add_book(student: Student,prof_id):
@@ -102,7 +105,7 @@ def add_book(student: Student,prof_id):
 def add_book(faculty: Faculty):
     try:
         data['faculties'].append(faculty.dict())
-        return data
+        return {"status_code":201, "message":"New Faculty Added Successfully"}
     except:
         return {"error":"Invalid Data Format", "status_code": 422, "messages":"Please correct your data format and url."}
 
@@ -113,8 +116,7 @@ def add_book(department: Department,fac_id):
         for i,fac in enumerate(facs):
             if fac['id']==int(fac_id):
                 data['faculties'][i]["departments"].append(department.dict())
-                break
-        return data
+                return {"status_code":201, "message":f"New Department of Faculty {fac_id} Added Successfully"}
     except:
         return {"error":"Invalid Data Format", "status_code": 422, "messages":"Please correct your data format and url"}
     
